@@ -3,6 +3,7 @@ package org.zerock.ex2.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.test.annotation.Commit;
 import org.zerock.ex2.entity.Memo;
@@ -14,8 +15,6 @@ import org.springframework.data.domain.Sort;
 
 
 import javax.transaction.Transactional;
-import java.util.stream.IntStream;
-import java.util.Optional;
 import java.util.List;
 
 @SpringBootTest
@@ -158,4 +157,15 @@ public class MemoRepositoryTests {
     public void testDeleteQueryMethods() {
         memoRepository.deleteMemoByMnoLessThan(10L);
     }
+
+    /*
+    // @Query Annotation
+    @Query("select m from Memo m order by m.mno desc")
+    List<Memo> getListDesc();
+
+    @Transactional
+    @Modifying
+    @Query("update Memo m set m.memoText = :memoText where m.mno = :mno ")
+    int updateMemoText(@Param("mno") Long mno, @Param("memoText") String memoText);
+    */
 }
