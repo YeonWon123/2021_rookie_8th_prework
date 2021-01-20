@@ -9,34 +9,37 @@
 
             <!-- 페이지 번호 -->
             <input type="hidden" name="page" th:value="${requestDTO.page}">
+            <input type="hidden" name="type" th:value="${requestDTO.type}">
+            <input type="hidden" name="keyword" th:value="${requestDTO.keyword}">
+
 
         <div class="form-group">
-            <label >Gno</label>
+            <label>Gno</label>
             <input type="text" class="form-control" name="gno" th:value="${dto.gno}" readonly>
         </div>
 
         <div class="form-group">
-            <label >Title</label>
+            <label>Title</label>
             <input type="text" class="form-control" name="title" th:value="${dto.title}">
         </div>
 
         <div class="form-group">
-            <label >Content</label>
+            <label>Content</label>
             <textarea class="form-control" rows="5" name="content">[[${dto.content}]]</textarea>
         </div>
 
         <div class="form-group">
-            <label >Writer</label>
+            <label>Writer</label>
             <input type="text" class="form-control" name="writer" th:value="${dto.writer}" readonly>
         </div>
 
         <div class="form-group">
-            <label >RegDate</label>
+            <label>RegDate</label>
             <input type="text" class="form-control" th:value="${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
         </div>
 
         <div class="form-group">
-            <label >ModDate</label>
+            <label>ModDate</label>
             <input type="text" class="form-control" th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
         </div>
 
@@ -67,14 +70,22 @@
             });
 
             $(".listBtn").click(function(){
-                var pageInfo = $("input[name='page']");
-                actionForm.empty();
-                actionForm.append(pageInfo);
+                //var pageInfo = $("input[name='page']");
+                var page = $("input[name='page']");
+                var type = $("input[name='type']");
+                var keyword = $("input[name='keyword']");
+
+                actionForm.empty(); // form 태그의 모든 내용을 지우고
+
+                actionForm.append(page);
+                actionForm.append(type);
+                actionForm.append(keyword);
+
                 actionForm
                     .attr("action", "/guestbook/list")
                     .attr("method", "get");
 
-                console.log(actionForm.html());
+                // console.log(actionForm.html());
                 actionForm.submit();
             });
 
