@@ -21,7 +21,6 @@ public class GuestbookRepositoryTests {
     @Autowired
     private GuestbookRepository guestbookRepository;
 
-    /*
     // 데이터 생성 테스트
     @Test
     public void insertDummies() {
@@ -34,9 +33,7 @@ public class GuestbookRepositoryTests {
             System.out.println(guestbookRepository.save(guestbook));
         });
     }
-    */
 
-    /*
     // 수정 시간 테스트
     @Test
     public void updateTest() {
@@ -49,7 +46,6 @@ public class GuestbookRepositoryTests {
           guestbookRepository.save(guestbook);
       }
     }
-    */
 
     // 단일 항목 검색 테스트
     @Test
