@@ -16,7 +16,7 @@ public class ReviewRepositoryTests {
 
     @Autowired
     private ReviewRepository reviewRepository;
-    
+
     @Test
     public void insertMovieReviews() {
         // 200개의 리뷰를 동록
