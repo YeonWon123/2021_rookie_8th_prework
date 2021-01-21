@@ -20,7 +20,7 @@ public class MovieRepositoryTests {
     @Autowired
     private MovieImageRepository imageRepository;
 
-    // 영화(Movie)와 영화 이미지(MovieImage)를 추가하는 테스트 코드 
+    // 영화(Movie)와 영화 이미지(MovieImage)를 추가하는 테스트 코드
     @Commit
     @Transactional
     @Test
