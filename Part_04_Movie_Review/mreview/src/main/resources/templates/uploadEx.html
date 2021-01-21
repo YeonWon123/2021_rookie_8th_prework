@@ -19,12 +19,13 @@
     </script>
 
     <script>
+        // 섬네일 이미지를 보여주도록 코드를 변경
         function showUploadedImages(arr) {
             console.log(arr);
             var divArea = $(".uploadResult");
 
             for (var i = 0; i < arr.length; i++) {
-                divArea.append("<img src='/display?fileName="+arr[i].imageURL+"'>");
+                divArea.append("<img src='/display?fileName="+arr[i].thumbnailURL+"'>"); // thumbnailURL로 변경
             }
 
         }
