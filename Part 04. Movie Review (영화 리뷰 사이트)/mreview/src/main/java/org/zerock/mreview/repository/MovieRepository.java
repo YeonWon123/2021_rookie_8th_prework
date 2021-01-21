@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.zerock.mreview.entity.Movie;
 
+import java.util.List;
+
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     // 영화(Movie)와 리뷰(Review)를 이용해서 페이징 처리
     // @Query("select m, avg(coalesce(r.grade, 0)), count(distinct r) from Movie m " + "left outer join Review r on r.movie = m group by m")
@@ -22,11 +24,13 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     @Query("select m, mi, avg(coalesce(r.grade, 0)), count(distinct r) from Movie m " +
            "left outer join MovieImage mi on mi.movie = m " +
            "left outer join Review r on r.movie = m group by m")
+    Page<Object[]> getListPage(Pageable pageable); // 페이지 처리
 
     // 영화 이미지 중에서 가장 나중에 추가된 이미지를 가져올 수 있을까?
     // @Query("select m, i, count(r) from Movie m left join MovieImage i on i.movie = m " +
     //        "and i.inum = (select max(i2.inum) from MovieImage i2 where i2.movie = m" +
     //        "left outer join Review r on r.movie = m group by m")
+    // Page<Object[]> getListPage(Pageable pageable); // 페이지 처리
 
     // 검색과 같이 동적으로 처리해야 하는 경우, JPQL Query 적용
     /*
@@ -44,5 +48,17 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     BooleanExpression expression = movie.mno.gt(0L);
      */
 
-    Page<Object[]> getListPage(Pageable pageable);
+    // 특정 영화의 평균 평점/리뷰 개수를 확인하는 쿼리
+    // 1. 영화(Movie)와 이미지(MovieImage)간 조인 후 처리
+    // @Query("select m, mi from Movie m left outer join MovieImage mi on mi.movie = m where m.mno = :mno")
+
+    // 2. 영화(Movie)와 이미지(MovieImage) 그리고 리뷰(Review)와 관련된 내용 처리(left join 사용)
+    // 리뷰 점수 평균과 리뷰 개수 확인 가능
+    @Query("select m, mi, avg(coalesce(r.grade, 0)), count(r)" +
+           "from Movie m left outer join MovieImage mi on mi.movie = m " +
+           "left outer join Review r on r.movie = m " +
+           "where m.mno = :mno group by mi")
+    List<Object[]> getMovieWithAll(Long mno); // 특정 영화 조회
+
+
 }
