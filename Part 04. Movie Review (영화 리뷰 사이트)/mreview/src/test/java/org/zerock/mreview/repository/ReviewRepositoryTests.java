@@ -7,6 +7,7 @@ import org.zerock.mreview.entity.Member;
 import org.zerock.mreview.entity.Movie;
 import org.zerock.mreview.entity.Review;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 // 100개의 영화(movie 테이블)와 100명의 회원(m_member)이 존재
@@ -39,4 +40,17 @@ public class ReviewRepositoryTests {
         });
     }
 
+    @Test
+    public void testGetMovieReviews() {
+        Movie movie = Movie.builder().mno(94L).build();
+        List<Review> result = reviewRepository.findByMovie(movie);
+
+        result.forEach(movieReview -> {
+            System.out.print(movieReview.getReviewnum());
+            System.out.print("\t"+movieReview.getGrade());
+            System.out.print("\t"+movieReview.getText());
+            System.out.print("\t"+movieReview.getMember().getEmail());
+            System.out.println("-----------------------------");
+        });
+    }
 }
