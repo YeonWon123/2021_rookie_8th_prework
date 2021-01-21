@@ -1,0 +1,50 @@
+package org.zerock.mreview.repository;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
+import org.zerock.mreview.entity.Movie;
+import org.zerock.mreview.entity.MovieImage;
+
+import java.util.UUID;
+import java.util.stream.IntStream;
+
+@SpringBootTest
+public class MovieRepositoryTests {
+
+    @Autowired
+    private MovieRepository movieRepository;
+
+    @Autowired
+    private MovieImageRepository imageRepository;
+
+    // 영화(Movie)와 영화 이미지(MovieImage)를 추가하는 테스트 코드 
+    @Commit
+    @Transactional
+    @Test
+    public void insertMovies() {
+        IntStream.rangeClosed(1, 100).forEach(i -> {
+            Movie movie = Movie.builder().title("Movie...." + i).build();
+
+            System.out.println("-----------------------------------------");
+
+            movieRepository.save(movie);
+
+            int count = (int)(Math.random() * 5) + 1; // 1,2,3,4
+
+            for (int j = 0; j < count; j++) {
+                MovieImage movieImage = MovieImage.builder()
+                        .uuid(UUID.randomUUID().toString())
+                        .movie(movie)
+                        .imgName("test"+j+".jpg").build();
+
+                imageRepository.save(movieImage);
+            }
+
+            System.out.println("==========================================");
+        });
+    }
+
+}
