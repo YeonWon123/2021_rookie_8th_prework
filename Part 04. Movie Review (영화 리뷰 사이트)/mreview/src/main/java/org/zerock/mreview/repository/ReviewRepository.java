@@ -2,6 +2,9 @@ package org.zerock.mreview.repository;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.zerock.mreview.entity.Member;
 import org.zerock.mreview.entity.Movie;
 import org.zerock.mreview.entity.Review;
 
@@ -17,4 +20,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     // 특정 영화에 대한 영화 리뷰 확인하기
     List<Review> findByMovie(Movie movie);
 
+    // 특정 회원을 삭제하는 메서드
+    @Modifying
+    @Query("delete from Review mr where mr.member = :member") // review 테이블을 한번만 보도록 함
+    void deleteByMember(Member member);
 }
