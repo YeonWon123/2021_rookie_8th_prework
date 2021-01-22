@@ -77,4 +77,7 @@ public interface MovieService {
 
         return entityMap;
     }
+
+    // 특정한 영화의 번호를 이용해서 MovieDTO를 반환하는 기능 정의
+    MovieDTO getMovie(Long mno);
 }
