@@ -99,13 +99,19 @@ public class UploadController {
     // 파일 데이터의 처리 : 스프링에서 제공하는 org.springframework.util.FileCopyUtils을 이용하여 처리
     // 브라우저 : 업로드된 결과 중 imageURL 속성 존재
     @GetMapping("/display")
-    public ResponseEntity<byte[]> getFile(String fileName) {
+    public ResponseEntity<byte[]> getFile(String fileName, String size) {
         ResponseEntity<byte[]> result = null;
 
         try {
             String srcFileName = URLDecoder.decode(fileName, "UTF-8");
             log.info("fileName: " + srcFileName);
             File file = new File(uploadPath + File.separator + srcFileName);
+
+            // size라는 파라미터 추가해서 원본 파일인지 섬네일인지 구분할 수 있도록 함
+            if (size != null && size.equals("1")) {
+                file = new File(file.getParent(), file.getName().substring(2));
+            }
+
             log.info("file: " + file);
             HttpHeaders header = new HttpHeaders();
 
