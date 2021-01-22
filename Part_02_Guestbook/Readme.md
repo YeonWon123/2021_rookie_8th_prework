@@ -33,5 +33,6 @@ localhost:8080/guestbook/list?page={숫자}&type={t|c|w|tc|tcw}&keyword={숫자}
 localhost:8080/guestbook/register  
 
 ## 수정 페이지
-localhost:8080/guestbook/modify?gno={숫자}&page={숫자} 
+localhost:8080/guestbook/modify?gno={숫자}&page={숫자}    
+
 주의: {숫자} 에는 적절한 숫자가 들어가야 합니다.
