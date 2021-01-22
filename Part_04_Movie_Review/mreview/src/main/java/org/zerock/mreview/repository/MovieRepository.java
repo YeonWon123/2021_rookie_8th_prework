@@ -54,7 +54,8 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     // 2. 영화(Movie)와 이미지(MovieImage) 그리고 리뷰(Review)와 관련된 내용 처리(left join 사용)
     // 리뷰 점수 평균과 리뷰 개수 확인 가능
-    @Query("select m, mi, avg(coalesce(r.grade, 0)), count(r)" +
+    // count(r) -> count(distinct r)로 수정 (중복 조회되어 숫자가 다르게 나오는 현상 발생)
+    @Query("select m, mi, avg(coalesce(r.grade, 0)), count(distinct r)" +
            "from Movie m left outer join MovieImage mi on mi.movie = m " +
            "left outer join Review r on r.movie = m " +
            "where m.mno = :mno group by mi")
